@@ -127,6 +127,15 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""A_Flashlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8547ee5-75ec-48be-a22d-015420749364"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -217,6 +226,17 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
                     ""action"": ""A_Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""690c41ae-ed8b-4615-9cc2-4168fb67578f"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A_Flashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -229,6 +249,7 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
         m_AM_Player_A_Look = m_AM_Player.FindAction("A_Look", throwIfNotFound: true);
         m_AM_Player_A_Sprint = m_AM_Player.FindAction("A_Sprint", throwIfNotFound: true);
         m_AM_Player_A_Jump = m_AM_Player.FindAction("A_Jump", throwIfNotFound: true);
+        m_AM_Player_A_Flashlight = m_AM_Player.FindAction("A_Flashlight", throwIfNotFound: true);
     }
 
     ~@IA_Main()
@@ -313,6 +334,7 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
     private readonly InputAction m_AM_Player_A_Look;
     private readonly InputAction m_AM_Player_A_Sprint;
     private readonly InputAction m_AM_Player_A_Jump;
+    private readonly InputAction m_AM_Player_A_Flashlight;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_Player".
     /// </summary>
@@ -340,6 +362,10 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_Player/A_Jump".
         /// </summary>
         public InputAction @A_Jump => m_Wrapper.m_AM_Player_A_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_Player/A_Flashlight".
+        /// </summary>
+        public InputAction @A_Flashlight => m_Wrapper.m_AM_Player_A_Flashlight;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -378,6 +404,9 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
             @A_Jump.started += instance.OnA_Jump;
             @A_Jump.performed += instance.OnA_Jump;
             @A_Jump.canceled += instance.OnA_Jump;
+            @A_Flashlight.started += instance.OnA_Flashlight;
+            @A_Flashlight.performed += instance.OnA_Flashlight;
+            @A_Flashlight.canceled += instance.OnA_Flashlight;
         }
 
         /// <summary>
@@ -401,6 +430,9 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
             @A_Jump.started -= instance.OnA_Jump;
             @A_Jump.performed -= instance.OnA_Jump;
             @A_Jump.canceled -= instance.OnA_Jump;
+            @A_Flashlight.started -= instance.OnA_Flashlight;
+            @A_Flashlight.performed -= instance.OnA_Flashlight;
+            @A_Flashlight.canceled -= instance.OnA_Flashlight;
         }
 
         /// <summary>
@@ -469,5 +501,12 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnA_Jump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "A_Flashlight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnA_Flashlight(InputAction.CallbackContext context);
     }
 }

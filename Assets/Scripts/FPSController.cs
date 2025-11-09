@@ -6,15 +6,20 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField] private Camera _playerCamera;
     [SerializeField] private float _walkSpeed = 2.5f;
     [SerializeField] private float _runSpeed = 3.0f;
     [SerializeField] private float _jumpHeight = 1.0f;
 
     [Header("Look Settings")]
-    [SerializeField] private float _lookSensitivity = 0.4f; // ↓ znížené z 2f na 0.4f
+    [SerializeField] private float _lookSensitivity = 0.4f;
     [SerializeField] private float _verticalLookClamp = 89f;
-    [SerializeField] private float _lookSmoothTime = 0.05f; // pridané – jemné vyhladzovanie
+    [SerializeField] private float _lookSmoothTime = 0.05f;
+
+    [Header("Flashlight Settings")]
+    [SerializeField] private Light _flashlight;
+    private bool _isFlashlightOn = true;
 
     [SerializeField] private bool _bCanMove = true;
 
@@ -40,17 +45,24 @@ public class FPSController : MonoBehaviour
 
     private void OnEnable()
     {
+        // Pohyb
         _mainInputActions.AM_Player.A_Move.performed += OnReadMovementVector;
         _mainInputActions.AM_Player.A_Move.canceled += OnReadMovementVector;
 
+        // Pohľad
         _mainInputActions.AM_Player.A_Look.performed += OnReadLookVector;
         _mainInputActions.AM_Player.A_Look.canceled += OnReadLookVector;
 
+        // Beh
         _mainInputActions.AM_Player.A_Sprint.performed += OnSprintButton;
         _mainInputActions.AM_Player.A_Sprint.canceled += OnSprintButton;
 
+        // Skok
         _mainInputActions.AM_Player.A_Jump.performed += OnJumpButton;
         _mainInputActions.AM_Player.A_Jump.canceled += OnJumpButton;
+
+        // 🔦 Svetlo (B)
+        _mainInputActions.AM_Player.A_Flashlight.performed += OnFlashlightToggle;
 
         _mainInputActions.AM_Player.Enable();
 
@@ -60,7 +72,22 @@ public class FPSController : MonoBehaviour
 
     private void OnDisable()
     {
+        _mainInputActions.AM_Player.A_Move.performed -= OnReadMovementVector;
+        _mainInputActions.AM_Player.A_Move.canceled -= OnReadMovementVector;
+
+        _mainInputActions.AM_Player.A_Look.performed -= OnReadLookVector;
+        _mainInputActions.AM_Player.A_Look.canceled -= OnReadLookVector;
+
+        _mainInputActions.AM_Player.A_Sprint.performed -= OnSprintButton;
+        _mainInputActions.AM_Player.A_Sprint.canceled -= OnSprintButton;
+
+        _mainInputActions.AM_Player.A_Jump.performed -= OnJumpButton;
+        _mainInputActions.AM_Player.A_Jump.canceled -= OnJumpButton;
+
+        _mainInputActions.AM_Player.A_Flashlight.performed -= OnFlashlightToggle;
+
         _mainInputActions.AM_Player.Disable();
+
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
     }
@@ -72,7 +99,6 @@ public class FPSController : MonoBehaviour
 
     private void OnReadLookVector(InputAction.CallbackContext context)
     {
-        // nová verzia: plynulé vyhladzovanie pohľadu
         var targetLook = context.ReadValue<Vector2>() * _lookSensitivity;
         _smoothedLookInput = Vector2.SmoothDamp(
             _smoothedLookInput,
@@ -94,6 +120,15 @@ public class FPSController : MonoBehaviour
     private void OnJumpButton(InputAction.CallbackContext context)
     {
         _bWantsToJump = context.performed;
+    }
+
+    private void OnFlashlightToggle(InputAction.CallbackContext context)
+    {
+        if (context.performed && _flashlight != null)
+        {
+            _isFlashlightOn = !_isFlashlightOn;
+            _flashlight.enabled = _isFlashlightOn;
+        }
     }
 
     void Update()
