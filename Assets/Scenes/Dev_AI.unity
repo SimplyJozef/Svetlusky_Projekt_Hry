@@ -1088,6 +1088,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 848603749419439517, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
+      propertyPath: PatrolPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 848603749419439517, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 607683997}
+    - target: {fileID: 848603749419439517, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 616656470}
+    - target: {fileID: 848603749419439517, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1714643901}
     - target: {fileID: 1738815514606623205, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.09
@@ -1127,6 +1143,14 @@ PrefabInstance:
     - target: {fileID: 1738815514606623205, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997024969676890708, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997024969676890708, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
+      propertyPath: _patrolStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8997024969676890708, guid: 21a06d53023b76d41bdcf21629687e96, type: 3}
       propertyPath: '_patrolPoints.Array.data[0]'

@@ -2,12 +2,12 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(MonsterController))]
+[CustomEditor(typeof(MonsterAIController))]
 public class FovEditor : Editor
 {
     private void OnSceneGUI()
     {
-        var monster = (MonsterController)target;
+        var monster = (MonsterAIController)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(monster.transform.position, Vector3.up, Vector3.forward, 360, monster.VisionRadius);
 
