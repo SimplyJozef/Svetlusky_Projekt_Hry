@@ -8,4 +8,8 @@ public class MainMenu : MonoBehaviour
       SceneManager.LoadScene("Scenes/Svetlusky_scena_dark");
    }
 
+   public void QuitGame()
+   {
+      Application.Quit();
+   }
 }
