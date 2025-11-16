@@ -20,6 +20,7 @@ public class FPSController : MonoBehaviour
     [Header("Flashlight Settings")]
     [SerializeField] private Light _flashlight;
     private bool _isFlashlightOn = true;
+    [SerializeField] private float _flashlightOverdriveBattery = 3.0f;
 
     [SerializeField] private bool _bCanMove = true;
 
@@ -36,6 +37,8 @@ public class FPSController : MonoBehaviour
 
     private bool _bIsSprinting;
     private bool _bWantsToJump;
+
+    private Coroutine _flashlightOverdriveCoroutine;
 
     private void Awake()
     {
@@ -64,6 +67,8 @@ public class FPSController : MonoBehaviour
         // 🔦 Svetlo (B)
         _mainInputActions.AM_Player.A_Flashlight.performed += OnFlashlightToggle;
 
+        _mainInputActions.AM_Player.A_FlashlightOverdrive.performed += OnFlashlightOverdrive;
+
         _mainInputActions.AM_Player.Enable();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -85,6 +90,8 @@ public class FPSController : MonoBehaviour
         _mainInputActions.AM_Player.A_Jump.canceled -= OnJumpButton;
 
         _mainInputActions.AM_Player.A_Flashlight.performed -= OnFlashlightToggle;
+        
+        _mainInputActions.AM_Player.A_FlashlightOverdrive.performed -= OnFlashlightOverdrive;
 
         _mainInputActions.AM_Player.Disable();
 
@@ -129,6 +136,42 @@ public class FPSController : MonoBehaviour
             _isFlashlightOn = !_isFlashlightOn;
             _flashlight.enabled = _isFlashlightOn;
         }
+    }
+    
+    private void OnFlashlightOverdrive(InputAction.CallbackContext context)
+    {
+        if (_flashlightOverdriveCoroutine is null)
+        {
+            _flashlightOverdriveCoroutine = StartCoroutine(FlashlightOverdriveRoutine());
+        }
+        else
+        {
+            // Cancel coroutine and null it
+            StopCoroutine(_flashlightOverdriveCoroutine);
+            _flashlightOverdriveCoroutine = null;
+        }
+    }
+
+    private IEnumerator FlashlightOverdriveRoutine()
+    {
+        const float duration = 3f;
+        var elapsed = 0f;
+
+        _flashlight.spotAngle = 12;
+        _flashlight.intensity = 16000;
+        var startValue = _flashlightOverdriveBattery;
+        var endValue = startValue - 1f; 
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            var t = elapsed / duration;
+            _flashlightOverdriveBattery = Mathf.Lerp(startValue, endValue, t);
+            var tL = elapsed / .15f;
+            _flashlight.spotAngle = Mathf.Lerp(34, 12, Mathf.Clamp(tL, 0, 1));
+            yield return null;
+        }
+        _flashlightOverdriveCoroutine = null;
+        _flashlightOverdriveBattery = endValue;
     }
 
     void Update()
