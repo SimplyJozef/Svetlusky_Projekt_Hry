@@ -17,13 +17,15 @@ public class QuestManager : MonoBehaviour
     private int paddlesCollected = 0;
 
     void Start()
-    {
+    {    
+        
         // Na začiatku je viditeľná len prevrátená loď
         boatModel_Overturned.SetActive(true);
         boatModel_NoPaddles.SetActive(false);
         boatModel_WithPaddles.SetActive(false);
         
         StartCoroutine(DisplayMessage("Hľadaj prevrátenú loď pri rieke...", 5f));
+        
     }
 
     // Centrálna funkcia, ktorú volá PlayerInteraction
