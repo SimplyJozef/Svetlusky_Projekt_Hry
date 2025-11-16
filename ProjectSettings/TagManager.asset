@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - InteractableBoat
+  - InteractablePaddle
   layers:
   - Default
   - TransparentFX
