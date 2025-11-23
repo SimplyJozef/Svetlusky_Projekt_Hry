@@ -297188,6 +297188,14 @@ PrefabInstance:
       propertyPath: interactionPromptGameObject
       value: 
       objectReference: {fileID: 236020748}
+    - target: {fileID: 9085498382452779206, guid: 4301370dc6b0d5942ab78b202c590a24, type: 3}
+      propertyPath: m_SpotAngle
+      value: 33.23819
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085498382452779206, guid: 4301370dc6b0d5942ab78b202c590a24, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 14.76275
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

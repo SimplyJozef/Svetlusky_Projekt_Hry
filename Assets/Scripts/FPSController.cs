@@ -40,6 +40,8 @@ public class FPSController : MonoBehaviour
 
     private Coroutine _flashlightOverdriveCoroutine;
 
+    private bool bIsInOverdrive = false;
+
     private void Awake()
     {
         _mainInputActions = new IA_Main();
@@ -140,38 +142,81 @@ public class FPSController : MonoBehaviour
     
     private void OnFlashlightOverdrive(InputAction.CallbackContext context)
     {
-        if (_flashlightOverdriveCoroutine is null)
+        if (!bIsInOverdrive && _flashlightOverdriveBattery > 0.0f)
         {
-            _flashlightOverdriveCoroutine = StartCoroutine(FlashlightOverdriveRoutine());
-        }
-        else
-        {
-            // Cancel coroutine and null it
-            StopCoroutine(_flashlightOverdriveCoroutine);
-            _flashlightOverdriveCoroutine = null;
+            StartCoroutine(FlashlightOverdrive());
         }
     }
 
-    private IEnumerator FlashlightOverdriveRoutine()
+    IEnumerator FlashlightOverdrive()
     {
-        const float duration = 3f;
+        bIsInOverdrive = true;
+        _flashlightOverdriveBattery -= 1;
+
+        const float enterTime = 0.25f;
+        yield return StartCoroutine(AnimateFlashlight(
+            duration: enterTime,
+            startSpot: _flashlight.spotAngle,
+            endSpot: 10f,
+            startInner: _flashlight.innerSpotAngle,
+            endInner: 5f,
+            startIntensity: _flashlight.intensity,
+            endIntensity: 32000f
+        ));
+
+        const float overdriveDuration = 2f;
         var elapsed = 0f;
 
-        _flashlight.spotAngle = 12;
-        _flashlight.intensity = 16000;
-        var startValue = _flashlightOverdriveBattery;
-        var endValue = startValue - 1f; 
-        while (elapsed < duration)
+        while (elapsed < overdriveDuration)
         {
             elapsed += Time.deltaTime;
-            var t = elapsed / duration;
-            _flashlightOverdriveBattery = Mathf.Lerp(startValue, endValue, t);
-            var tL = elapsed / .15f;
-            _flashlight.spotAngle = Mathf.Lerp(34, 12, Mathf.Clamp(tL, 0, 1));
+
+            var flicker = Mathf.PerlinNoise(Time.time * 20f, 0f) * 25000;
+
+            _flashlight.intensity = 32000f + flicker;
+
             yield return null;
         }
-        _flashlightOverdriveCoroutine = null;
-        _flashlightOverdriveBattery = endValue;
+
+        const float exitTime = 0.25f;
+        yield return StartCoroutine(AnimateFlashlight(
+            duration: exitTime,
+            startSpot: _flashlight.spotAngle,
+            endSpot: 33.23819f,
+            startInner: _flashlight.innerSpotAngle,
+            endInner: 14.76275f,
+            startIntensity: _flashlight.intensity,
+            endIntensity: 4000f
+        ));
+
+        bIsInOverdrive = false;
+    }
+    
+    IEnumerator AnimateFlashlight(
+        float duration,
+        float startSpot, float endSpot,
+        float startInner, float endInner,
+        float startIntensity, float endIntensity)
+    {
+        var time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            var t = time / duration;
+
+            t = Mathf.SmoothStep(0f, 1f, t);
+
+            _flashlight.spotAngle = Mathf.Lerp(startSpot, endSpot, t);
+            _flashlight.innerSpotAngle = Mathf.Lerp(startInner, endInner, t);
+            _flashlight.intensity = Mathf.Lerp(startIntensity, endIntensity, t);
+
+            yield return null;
+        }
+
+        _flashlight.spotAngle = endSpot;
+        _flashlight.innerSpotAngle = endInner;
+        _flashlight.intensity = endIntensity;
     }
 
     void Update()
