@@ -136,6 +136,15 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""A_FlashlightOverdrive"",
+                    ""type"": ""Button"",
+                    ""id"": ""79ead815-a199-491e-bbbc-e1122638864e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -237,6 +246,17 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
                     ""action"": ""A_Flashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07751931-4a12-4432-afb9-39a80ac12ad1"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""A_FlashlightOverdrive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -250,6 +270,7 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
         m_AM_Player_A_Sprint = m_AM_Player.FindAction("A_Sprint", throwIfNotFound: true);
         m_AM_Player_A_Jump = m_AM_Player.FindAction("A_Jump", throwIfNotFound: true);
         m_AM_Player_A_Flashlight = m_AM_Player.FindAction("A_Flashlight", throwIfNotFound: true);
+        m_AM_Player_A_FlashlightOverdrive = m_AM_Player.FindAction("A_FlashlightOverdrive", throwIfNotFound: true);
     }
 
     ~@IA_Main()
@@ -335,6 +356,7 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
     private readonly InputAction m_AM_Player_A_Sprint;
     private readonly InputAction m_AM_Player_A_Jump;
     private readonly InputAction m_AM_Player_A_Flashlight;
+    private readonly InputAction m_AM_Player_A_FlashlightOverdrive;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_Player".
     /// </summary>
@@ -366,6 +388,10 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_Player/A_Flashlight".
         /// </summary>
         public InputAction @A_Flashlight => m_Wrapper.m_AM_Player_A_Flashlight;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_Player/A_FlashlightOverdrive".
+        /// </summary>
+        public InputAction @A_FlashlightOverdrive => m_Wrapper.m_AM_Player_A_FlashlightOverdrive;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -407,6 +433,9 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
             @A_Flashlight.started += instance.OnA_Flashlight;
             @A_Flashlight.performed += instance.OnA_Flashlight;
             @A_Flashlight.canceled += instance.OnA_Flashlight;
+            @A_FlashlightOverdrive.started += instance.OnA_FlashlightOverdrive;
+            @A_FlashlightOverdrive.performed += instance.OnA_FlashlightOverdrive;
+            @A_FlashlightOverdrive.canceled += instance.OnA_FlashlightOverdrive;
         }
 
         /// <summary>
@@ -433,6 +462,9 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
             @A_Flashlight.started -= instance.OnA_Flashlight;
             @A_Flashlight.performed -= instance.OnA_Flashlight;
             @A_Flashlight.canceled -= instance.OnA_Flashlight;
+            @A_FlashlightOverdrive.started -= instance.OnA_FlashlightOverdrive;
+            @A_FlashlightOverdrive.performed -= instance.OnA_FlashlightOverdrive;
+            @A_FlashlightOverdrive.canceled -= instance.OnA_FlashlightOverdrive;
         }
 
         /// <summary>
@@ -508,5 +540,12 @@ public partial class @IA_Main: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnA_Flashlight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "A_FlashlightOverdrive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnA_FlashlightOverdrive(InputAction.CallbackContext context);
     }
 }

@@ -6,22 +6,23 @@ public class PlayerInteraction : MonoBehaviour
     public float interactionDistance = 5f;
     public GameObject interactionPromptGameObject;
     public TextMeshProUGUI interactionPromptText; // Nová premenná pre text
-
+    
+    [SerializeField] private Camera _playerCamera;
+    
     private bool isAimingAtInteractable = false;
-    private Camera playerCamera;
     private QuestManager questManager;
     private GameObject currentInteractableObject = null; // Zapamätáme si, s čím interagujeme
 
     void Start()
     {
-        playerCamera = GetComponent<Camera>();
         questManager = FindObjectOfType<QuestManager>();
         interactionPromptGameObject.SetActive(false);
     }
 
     void Update()
     {
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        Debug.Log("Tick");
+        Ray ray = new Ray(_playerCamera.transform.position, _playerCamera.transform.forward);
         RaycastHit hitInfo;
 
         bool hitInteractableThisFrame = false;
@@ -51,6 +52,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (isAimingAtInteractable && Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Interact");
             // Informujeme QuestManager, s ktorým objektom sme interagovali
             questManager.HandleInteraction(currentInteractableObject);
         }
