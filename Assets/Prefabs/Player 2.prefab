@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3704523773928798052}
   m_Layer: 31
   m_Name: Player 2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,6 +80,7 @@ MonoBehaviour:
   _verticalLookClamp: 89
   _lookSmoothTime: 0.05
   _flashlight: {fileID: 3420511097051074591}
+  _flashlightOverdriveBattery: 3
   _bCanMove: 1
 --- !u!1 &940672937106647958
 GameObject:

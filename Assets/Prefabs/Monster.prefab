@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6941344933511737684}
   - component: {fileID: 437552710504969955}
   - component: {fileID: 848603749419439517}
+  - component: {fileID: -7781196721272338482}
   m_Layer: 29
   m_Name: Monster
   m_TagString: Untagged
@@ -166,6 +167,31 @@ MonoBehaviour:
   PatrolStyle: 0
   bCanSeeTarget: 0
   Target: {fileID: 0}
+  damageAmount: 10
+  damageInterval: 1
+--- !u!136 &-7781196721272338482
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37879594961319457}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.2
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4436146862226188846
 GameObject:
   m_ObjectHideFlags: 0

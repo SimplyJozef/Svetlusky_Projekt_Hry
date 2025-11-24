@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 493845474008068878}
   m_Layer: 31
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -328,4 +328,7 @@ MonoBehaviour:
   _jumpHeight: 1
   _lookSensitivity: 0.25
   _verticalLookClamp: 89
+  _lookSmoothTime: 0.05
+  _flashlight: {fileID: 0}
+  _flashlightOverdriveBattery: 3
   _bCanMove: 1
