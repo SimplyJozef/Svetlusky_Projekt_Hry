@@ -122,4 +122,37 @@ public class MonsterAIController : MonoBehaviour
             Target = null;
         }
     }
+
+    // ============================================
+    // DAMAGE SYSTEM
+    // ============================================
+
+public int damagePerSecond = 30;   // koľko damage za 1 sekundu
+
+private void OnTriggerStay(Collider other)
+{
+    if (other.CompareTag("Player"))
+    {
+        PlayerHealth health = other.GetComponent<PlayerHealth>();
+
+        if (health != null)
+        {
+            // damage sa počíta podľa času medzi frame-mi
+            int dmg = Mathf.RoundToInt(damagePerSecond * Time.deltaTime);
+
+            if (dmg > 0)   // aby neposielal 0 dmg
+            {
+                Debug.Log("Damaging player for: " + dmg);
+                health.TakeDamage(dmg);
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerHealth NOT FOUND on: " + other.name);
+        }
+    }
+}
+
+
+
 }
