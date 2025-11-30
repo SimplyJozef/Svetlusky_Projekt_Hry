@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(CharacterController))]
 public class FPSController : MonoBehaviour
@@ -24,6 +26,8 @@ public class FPSController : MonoBehaviour
 
     [SerializeField] private bool _bCanMove = true;
 
+    [SerializeField] private bool _bRecordLogs = true;
+
     private Vector2 _movementVector;
     private float _lookHorizontal;
     private float _lookVertical;
@@ -42,10 +46,25 @@ public class FPSController : MonoBehaviour
 
     private bool bIsInOverdrive = false;
 
+    private string _userId;
+
+    private Coroutine _logCoroutine;
+    private Coroutine _postCoroutine;
+
+    private string _logs;
+
     private void Awake()
     {
         _mainInputActions = new IA_Main();
         _characterController = GetComponent<CharacterController>();
+    }
+
+    private void Start()
+    {
+        _userId = "Anon";
+        SendLog("[LogBegin]");
+        _logCoroutine = StartCoroutine(LogMovementCoroutine());
+        _postCoroutine = StartCoroutine(PeriodicLogSendCoroutine());
     }
 
     private void OnEnable()
@@ -249,5 +268,61 @@ public class FPSController : MonoBehaviour
         var finalMove = (moveDir * speed) + (_velocity.y * Vector3.up);
 
         _characterController.Move(finalMove * Time.deltaTime);
+    }
+
+    private IEnumerator PeriodicLogSendCoroutine()
+    {
+        while (_bRecordLogs)
+        {
+            yield return new WaitForSeconds(10f);
+            SendLog(_logs);
+            _logs = "";
+        }
+    }
+
+    private IEnumerator LogMovementCoroutine()
+    {
+        while (_bRecordLogs)
+        {
+            LogMovement(transform.position, transform.forward);
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void LogMovement(Vector3 position, Vector3 fwd)
+    {
+        _logs += $"|Move;{position.x};{position.y};{position.z};{fwd.x};{fwd.y};{fwd.z};{Time.timeSinceLevelLoad}";
+    }
+
+    private void SendLog(string data)
+    {
+        var apiUrl = "https://game-log-server-w2i98.ondigitalocean.app/recordGameLog";
+        var log = new LogEntry
+        {
+            User = _userId,
+            Data = data
+        };
+        var json = JsonUtility.ToJson(log);
+        StartCoroutine(SendPostRequest(apiUrl, json));
+    }
+
+    private IEnumerator SendPostRequest(string apiUrl, string json)
+    {
+        var req = new UnityWebRequest(apiUrl, "POST");
+        var bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
+        req.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        req.downloadHandler = new DownloadHandlerBuffer();
+        req.SetRequestHeader("Content-Type", "application/json");
+        
+        yield return req.SendWebRequest();
+
+        if (req.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Response: " + req.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error: " + req.error);
+        }
     }
 }
