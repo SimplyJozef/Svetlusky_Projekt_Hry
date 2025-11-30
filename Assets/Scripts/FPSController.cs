@@ -61,7 +61,7 @@ public class FPSController : MonoBehaviour
 
     private void Start()
     {
-        _userId = "Anon";
+        _userId = PlayerPrefs.GetString("UserName");
         SendLog("[LogBegin]");
         _logCoroutine = StartCoroutine(LogMovementCoroutine());
         _postCoroutine = StartCoroutine(PeriodicLogSendCoroutine());
