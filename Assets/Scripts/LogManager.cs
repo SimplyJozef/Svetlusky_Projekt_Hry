@@ -47,7 +47,7 @@ public class LogManager : MonoBehaviour
         }
     }
     
-    private void SendLog(string data)
+    public void SendLog(string data)
     {
         var apiUrl = "https://game-log-server-w2i98.ondigitalocean.app/recordGameLog";
         var log = new LogEntry

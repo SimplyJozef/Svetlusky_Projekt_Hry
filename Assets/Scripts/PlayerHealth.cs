@@ -18,6 +18,8 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= dmg;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        LogManager.Instance.SendLog($"[PlayerTookDamage]{dmg}");
+        LogManager.Instance.SendLog($"[PlayerNewHealth]{currentHealth}");
 
         healthUI.SetHealth(currentHealth);
 
@@ -32,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("PLAYER DIED");
+        LogManager.Instance.SendLog("[Death]");
         SceneManager.LoadScene("Main_Menu");
     }
 }
