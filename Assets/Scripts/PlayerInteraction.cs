@@ -53,6 +53,8 @@ public class PlayerInteraction : MonoBehaviour
         if (isAimingAtInteractable && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("Interact");
+            var interactableName = currentInteractableObject is null ? "UNKNOWN" : currentInteractableObject.name;
+            LogManager.Instance.SendLog($"[Interact]{interactableName}");
             // Informujeme QuestManager, s ktorým objektom sme interagovali
             questManager.HandleInteraction(currentInteractableObject);
         }
