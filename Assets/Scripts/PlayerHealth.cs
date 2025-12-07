@@ -18,9 +18,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= dmg;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        LogManager.Instance.SendLog($"[PlayerTookDamage]{dmg}");
-        LogManager.Instance.SendLog($"[PlayerNewHealth]{currentHealth}");
-
         healthUI.SetHealth(currentHealth);
 
         Debug.Log("HP: " + currentHealth);

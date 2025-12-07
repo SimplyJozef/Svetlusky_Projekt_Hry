@@ -45,6 +45,8 @@ public class MonsterAIController : MonoBehaviour
     public IdleState IdleState = new();
     public PatrolState PatrolState = new();
     public ChaseState ChaseState = new();
+
+    public Animator Animator;
     
     private void Awake()
     {
@@ -53,6 +55,7 @@ public class MonsterAIController : MonoBehaviour
 
     private void Start()
     {
+        Animator = GetComponentInChildren<Animator>();
         StartCoroutine(FovRoutine());
         ChangeState(_patrolState);
     }

@@ -4,9 +4,11 @@ namespace States
 {
     public class ChaseState : IState
     {
+        private static readonly int _bIsWalking = Animator.StringToHash("bIsWalking");
         private float _distance;
         public void OnEnter(MonsterAIController controller)
         {
+            controller.Animator.SetBool(_bIsWalking, true);
         }
 
         public void TickState(MonsterAIController controller)

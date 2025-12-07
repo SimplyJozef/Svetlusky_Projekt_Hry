@@ -1,12 +1,16 @@
+using UnityEngine;
+
 namespace States
 {
     public class PatrolState : IState
     {
+        private static readonly int _bIsWalking = Animator.StringToHash("bIsWalking");
         private int _currentPatrolPoint = 0;
         private bool _reversePatrolMoveFwd = true;
         public void OnEnter(MonsterAIController controller)
         {
             controller.Agent.destination = controller.PatrolPoints[_currentPatrolPoint].position;
+            controller.Animator.SetBool(_bIsWalking, true);
         }
 
         public void TickState(MonsterAIController controller)

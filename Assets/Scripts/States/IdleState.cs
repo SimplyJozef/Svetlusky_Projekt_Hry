@@ -5,11 +5,13 @@ namespace States
 {
     public class IdleState : IState
     {
+        private static readonly int _bIsWalking = Animator.StringToHash("bIsWalking");
         private float _idleTime = 0;
         
         public void OnEnter(MonsterAIController controller)
         {
             _idleTime = controller.IdleWaitTime;
+            controller.Animator.SetBool(_bIsWalking, false);
         }
 
         public void TickState(MonsterAIController controller)
