@@ -25617,9 +25617,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuestManager
   questTextUI: {fileID: 1119028491}
-  playerTransform: {fileID: 0}
-  arrowPrefab: {fileID: 0}
-  arrowContainer: {fileID: 0}
+  playerTransform: {fileID: 411885758}
+  arrowPrefab: {fileID: 6577874540643316321, guid: 3cce13a2bb53ae04ea76ff98c95f96e5, type: 3}
+  arrowContainer: {fileID: 1492031567}
   boatModel_Overturned: {fileID: 605009643}
   boatModel_NoPaddles: {fileID: 414310682}
   boatModel_WithPaddles: {fileID: 1571344728}
@@ -59029,6 +59029,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8b8cb715a48ad741a381e3614f06b0e, type: 3}
+--- !u!4 &411885758 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2973728859978244955, guid: 4301370dc6b0d5942ab78b202c590a24, type: 3}
+  m_PrefabInstance: {fileID: 4022554173258910723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &412137598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -205745,14 +205750,14 @@ RectTransform:
   m_GameObject: {fileID: 1492031566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.09495042, y: 0.11413967, z: 0.55223}
+  m_LocalScale: {x: 0.11029712, y: 0.13258791, z: 0.6414862}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2037176359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 477}
+  m_AnchoredPosition: {x: 0, y: 388}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1492031568
